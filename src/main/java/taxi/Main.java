@@ -1,5 +1,6 @@
 package taxi;
 
+import org.apache.spark.Accumulator;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
@@ -22,6 +23,16 @@ public class Main {
 
         JavaRDD<Trip> tripRdd = rdd.map(Trip::new);
         tripRdd.persist(StorageLevel.MEMORY_AND_DISK());
+
+        Accumulator<Integer> smallTripsCountAcc = sc.accumulator(0);
+
+        tripRdd.foreach(trip -> {
+            if(trip.getKm()<5){
+                smallTripsCountAcc.add(1);
+            }
+        });
+
+        System.out.println(smallTripsCountAcc.value());
 
         JavaRDD<Trip> bostonTripsRdd = tripRdd.filter(trip -> trip.getCity().equals("boston"));
         bostonTripsRdd.persist(StorageLevel.MEMORY_AND_DISK());
