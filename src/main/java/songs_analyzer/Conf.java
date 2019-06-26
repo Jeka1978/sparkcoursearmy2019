@@ -24,8 +24,13 @@ public class Conf {
 
 
     public static void main(String[] args) {
+
+        System.setProperty("spring.profiles.active", "DEV");
+
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(Conf.class);
+        SongsAnalyzer songsAnalyzer = context.getBean(SongsAnalyzer.class);
+        songsAnalyzer.printMostPopularWords("beatles",3);
     }
 
 
