@@ -25,6 +25,9 @@ import static org.junit.Assert.*;
 public class TopXServiceTest {
 
     @Autowired
+    private UserConf userConf;
+
+    @Autowired
     JavaSparkContext sc;
 
     @Autowired
