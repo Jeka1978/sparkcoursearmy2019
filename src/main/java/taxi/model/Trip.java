@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Wither;
 
 import java.io.Serializable;
 
@@ -14,10 +15,12 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Wither
 public class Trip implements Serializable {
     private String id;
     private String city;
     private int km;
+    private int price;
 
     public Trip(String line) {
         String[] arr = line.split(" ");
